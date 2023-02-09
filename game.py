@@ -50,7 +50,7 @@ def load():
     # update the position of the player
     savedstudent = f.readline()
     for word in savedstudent:
-        if word >= "0" and word <= "9":
+        if "0" <= word <= "9":
             x = x * 10 + int(word)
         else:
             position.append(x)
@@ -61,7 +61,7 @@ def load():
     x = 0
     savedguard = f.readline()
     for word in savedguard:
-        if word >= "0" and word <= "9":
+        if "0" <= word <= "9":
             x = x * 10 + int(word)
         else:
             position.append(x)
@@ -72,7 +72,7 @@ def load():
     x = 0
     savedguard1 = f.readline()
     for word in savedguard1:
-        if word >= "0" and word <= "9":
+        if "0" <= word <= "9":
             x = x * 10 + int(word)
         else:
             position.append(x)
@@ -83,7 +83,7 @@ def load():
     x = 0
     savedguard2 = f.readline()
     for word in savedguard2:
-        if word >= "0" and word <= "9":
+        if "0" <= word <= "9":
             x = x * 10 + int(word)
         else:
             position.append(x)
@@ -94,7 +94,7 @@ def load():
     x = 0
     savedfence = f.readline()
     for word in savedfence:
-        if word >= "0" and word <= "9":
+        if "0" <= word <= "9":
             x = x * 10 + int(word)
         else:
             position.append(x)
@@ -105,7 +105,7 @@ def load():
     x = 0
     savedfence = f.readline()
     for word in savedfence:
-        if word >= "0" and word <= "9":
+        if "0" <= word <= "9":
             x = x * 10 + int(word)
         else:
             position.append(x)
@@ -116,7 +116,7 @@ def load():
     x = 0
     savedfence = f.readline()
     for word in savedfence:
-        if word >= "0" and word <= "9":
+        if "0" <= word <= "9":
             x = x * 10 + int(word)
         else:
             position.append(x)
@@ -127,7 +127,7 @@ def load():
     x = 0
     savedfence = f.readline()
     for word in savedfence:
-        if word >= "0" and word <= "9":
+        if "0" <= word <= "9":
             x = x * 10 + int(word)
         else:
             position.append(x)
@@ -138,7 +138,7 @@ def load():
     x = 0
     savedfence = f.readline()
     for word in savedfence:
-        if word >= "0" and word <= "9":
+        if "0" <= word <= "9":
             x = x * 10 + int(word)
         else:
             position.append(x)
