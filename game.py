@@ -9,8 +9,8 @@ global direction
 from tkinter import simpledialog
 
 
-# save the data of the game
 def save():
+    """Save the game data"""
     f = open("saved.txt", "w")
     f.write(str(score))
     f.write(str("\n"))
@@ -33,8 +33,8 @@ def save():
     f.write(str(canvas.coords(fence5)))
 
 
-# load the last game saved
 def load():
+    """Load the last game saved"""
     global x, score
     canvas.delete("text")
     position = []
@@ -146,8 +146,8 @@ def load():
     canvas.coords(fence5, position[1], position[4], position[7], position[10])
 
 
-# board is the function that creates and updates the leader board
 def board():
+    """Create and update leader board"""
     # the user is asked to introduce his/her name
     USER_INP = simpledialog.askstring(title="Good job!", prompt="What's your Name?:)")
     # the leader board will appear on a new window
@@ -243,8 +243,8 @@ def onclick():
         direction = None
 
 
-# placing the safe party/yellow rectangle
 def placeSafeParty():
+    """Place the safe party/yellow rectangle"""
     global safe
     safe = canvas.create_rectangle(0, 0, studentSize, studentSize, fill="gold")
     canvas.move(safe, 0, 0)
@@ -284,8 +284,8 @@ def donothing():
     canvas.delete("text")
 
 
-# opening a window that is going to show the story/instructions
 def openNewWindow():
+    """Open a new window with the story/instructions"""
     global my_img
     top = Toplevel()
     my_img = PhotoImage(file="story-instructions.png")
@@ -321,8 +321,8 @@ def setWindowDimensions(w, h):
     return window
 
 
-# placing the party/the indigo rectangle
 def placeParty():
+    """Place the party/indigo rectangle"""
     global party, partyX, partyY
     party = canvas.create_rectangle(0, 0, studentSize, studentSize, fill="indigo")
     partyX = random.randint(0, width - studentSize)
@@ -362,8 +362,8 @@ def placeParty():
     positions.append(canvas.coords(party))
 
 
-# placing the Security/ darkblue rectangles
 def placeGuards():
+    """Place the guards/darkblue rectangles"""
     global guard, guardX, guardY, guard1, guard1, guard2, guard1X, guard1Y, guard2X, guard2Y
     guard = canvas.create_rectangle(
         0, 0, studentSize * 2, studentSize * 2, fill="darkblue"
@@ -435,8 +435,8 @@ def placeGuards():
         partyGuard = canvas.coords(guard2)
 
 
-# placing the fences/grey rectangles
 def placeFence():
+    """Place the fences/grey rectangles"""
     global fence1, fence2, fence3, fenceX, fenceY, fence4, fence5, fence2X, fence2Y, fence3X, fence3Y, fence4X, fence4Y, fence5X, fence5Y
     fence1 = canvas.create_rectangle(0, 0, studentSize, studentSize * 10, fill="grey")
     fenceX = random.randint(50, 400)
@@ -546,16 +546,16 @@ def Show():
     window.deiconify()
 
 
-# the score goes up by ten
 def ChangeScore():
+    """Change the score by 10"""
     global score
     score += 10
     txt = "Score:" + str(score)
     canvas.itemconfigure(scoreText, text=txt)
 
 
-# once the player gets to the party, the party moves in another random position
 def moveParty():
+    """Move the party to a random position"""
     global party, partyX, partyY
     canvas.move(party, (partyX * (-1)), (partyY * (-1)))
     partyX = random.randint(0, width - studentSize)
