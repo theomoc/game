@@ -149,7 +149,7 @@ def load():
 def board():
     """Create and update leader board"""
     # the user is asked to introduce his/her name
-    USER_INP = simpledialog.askstring(title="Good job!", prompt="What's your Name?:)")
+    user_inp = simpledialog.askstring(title="Good job!", prompt="What's your Name?:)")
     # the leader board will appear on a new window
     board = Toplevel()
     board.geometry("200x100")
@@ -185,16 +185,16 @@ def board():
         zname = yname
         yname = xname
         x = score
-        xname = USER_INP
+        xname = user_inp
     elif score > y:
         z = y
         zname = yname
         y = score
-        yname = USER_INP
+        yname = user_inp
     elif score > z:
         z = score
         poz = 3
-        zname = USER_INP
+        zname = user_inp
     # updating the files
     f = open("score.txt", "w")
     f.write(str(x) + "\n" + str(y) + "\n" + str(z))
@@ -220,9 +220,9 @@ def board():
     )
     # displaying the top at the end of the game
     myLabel1 = Label(board, text="Leader Board")
-    myLabel = Label(board, text=leader)
+    my_label = Label(board, text=leader)
     myLabel1.pack()
-    myLabel.pack()
+    my_label.pack()
     button = Button(board, text="Restart", command=donothing).pack()
     board.mainloop()
 
@@ -230,12 +230,12 @@ def board():
 # pausing the game
 def onclick():
     global direction, copydirection
-    if direction == None:
+    if direction is None:
         direction = copydirection
-        canvas.bind("a", leftKey)
-        canvas.bind("d", rightKey)
-        canvas.bind("w", upKey)
-        canvas.bind("s", downKey)
+        canvas.bind("a", left_key)
+        canvas.bind("d", right_key)
+        canvas.bind("w", up_key)
+        canvas.bind("s", down_key)
         canvas.focus_set()
 
     else:
@@ -243,7 +243,7 @@ def onclick():
         direction = None
 
 
-def placeSafeParty():
+def place_safe_party():
     """Place the safe party/yellow rectangle"""
     global safe
     safe = canvas.create_rectangle(0, 0, studentSize, studentSize, fill="gold")
@@ -255,10 +255,10 @@ def donothing():
     global score, direction, student
     canvas.delete(student)
     student = []
-    studentSize = 15
+    student_size = 15
     student.append(
         canvas.create_rectangle(
-            studentSize, studentSize, studentSize * 2, studentSize * 2, fill="white"
+            student_size, student_size, student_size * 2, student_size * 2, fill="white"
         )
     )
 
@@ -268,23 +268,23 @@ def donothing():
 
     # calling the functions
     direction = None
-    canvas.bind("a", leftKey)
-    canvas.bind("d", rightKey)
-    canvas.bind("w", upKey)
-    canvas.bind("s", downKey)
-    canvas.bind("e", SeeKey)
-    canvas.bind("q", HideKey)
-    canvas.bind("<space>", PauseKey)
+    canvas.bind("a", left_key)
+    canvas.bind("d", right_key)
+    canvas.bind("w", up_key)
+    canvas.bind("s", down_key)
+    canvas.bind("e", see_key)
+    canvas.bind("q", hide_key)
+    canvas.bind("<space>", pause_key)
     canvas.focus_set()
-    moveParty()
-    moveGuard()
-    moveStudent()
+    move_party()
+    move_guard()
+    move_student()
 
     # delete the Game Over text
     canvas.delete("text")
 
 
-def openNewWindow():
+def open_new_window():
     """Open a new window with the story/instructions"""
     global my_img
     top = Toplevel()
@@ -293,7 +293,7 @@ def openNewWindow():
     top.geometry("500x500")
 
 
-def setWindowDimensions(w, h):
+def set_window_dimensions(w, h):
     # set window dimensions
     window = Tk()
     window.title("Freshers'")
@@ -313,7 +313,7 @@ def setWindowDimensions(w, h):
     menubar.add_cascade(label="Options", menu=filemenu)
 
     helpmenu = Menu(menubar, tearoff=0)
-    helpmenu.add_command(label="Instructions", command=openNewWindow)
+    helpmenu.add_command(label="Instructions", command=open_new_window)
     menubar.add_cascade(label="Instructions", menu=helpmenu)
 
     window.config(menu=menubar)
@@ -321,31 +321,31 @@ def setWindowDimensions(w, h):
     return window
 
 
-def placeParty():
+def place_party():
     """Place the party/indigo rectangle"""
     global party, partyX, partyY
     party = canvas.create_rectangle(0, 0, studentSize, studentSize, fill="indigo")
     partyX = random.randint(0, width - studentSize)
     partyY = random.randint(0, height - studentSize)
     canvas.move(party, partyX, partyY)
-    partyPos = canvas.coords(party)
-    fencePos1 = canvas.coords(fence1)
-    fencePos2 = canvas.coords(fence2)
-    fencePos3 = canvas.coords(fence3)
-    fencePos4 = canvas.coords(fence4)
-    fencePos5 = canvas.coords(fence5)
+    party_pos = canvas.coords(party)
+    fence_pos1 = canvas.coords(fence1)
+    fence_pos2 = canvas.coords(fence2)
+    fence_pos3 = canvas.coords(fence3)
+    fence_pos4 = canvas.coords(fence4)
+    fence_pos5 = canvas.coords(fence5)
     # check if the party is overlapping the other objects from the code
     while (
-        overlapping(partyPos, fencePos1)
-        or overlapping(partyPos, fencePos2)
-        or overlapping(partyPos, fencePos3)
-        or overlapping(partyPos, fencePos4)
-        or overlapping(partyPos, fencePos5)
+        overlapping(party_pos, fence_pos1)
+        or overlapping(party_pos, fence_pos2)
+        or overlapping(party_pos, fence_pos3)
+        or overlapping(party_pos, fence_pos4)
+        or overlapping(party_pos, fence_pos5)
     ):
         partyX = random.randint(0, width - studentSize)
         partyY = random.randint(0, height - studentSize)
         canvas.move(party, partyX, partyY)
-        partyPos = canvas.coords(party)
+        party_pos = canvas.coords(party)
     positions = []
     positions.append(canvas.coords(party))
     # check if the position of the party is not outside the canvas
@@ -362,7 +362,7 @@ def placeParty():
     positions.append(canvas.coords(party))
 
 
-def placeGuards():
+def place_guards():
     """Place the guards/darkblue rectangles"""
     global guard, guardX, guardY, guard1, guard1, guard2, guard1X, guard1Y, guard2X, guard2Y
     guard = canvas.create_rectangle(
@@ -371,71 +371,71 @@ def placeGuards():
     guardX = random.randint(0, width - studentSize)
     guardY = random.randint(0, height - studentSize)
     canvas.move(guard, guardX, guardY)
-    Spos = canvas.coords(student[0])
-    partyGuard = canvas.coords(guard)
-    fencePos1 = canvas.coords(fence1)
-    fencePos2 = canvas.coords(fence2)
-    fencePos3 = canvas.coords(fence3)
-    fencePos4 = canvas.coords(fence4)
-    fencePos5 = canvas.coords(fence5)
-    partyPos = canvas.coords(party)
+    s_pos = canvas.coords(student[0])
+    party_guard = canvas.coords(guard)
+    fence_pos1 = canvas.coords(fence1)
+    fence_pos2 = canvas.coords(fence2)
+    fence_pos3 = canvas.coords(fence3)
+    fence_pos4 = canvas.coords(fence4)
+    fence_pos5 = canvas.coords(fence5)
+    party_pos = canvas.coords(party)
     # checking for each guard is the position is overlapping
     while (
-        overlapping(partyGuard, Spos)
-        or overlapping(partyGuard, partyPos)
-        or overlapping(partyGuard, fencePos1)
-        or overlapping(partyGuard, fencePos2)
-        or overlapping(partyGuard, fencePos3)
-        or overlapping(partyGuard, fencePos4)
-        or overlapping(partyGuard, fencePos5)
+        overlapping(party_guard, s_pos)
+        or overlapping(party_guard, party_pos)
+        or overlapping(party_guard, fence_pos1)
+        or overlapping(party_guard, fence_pos2)
+        or overlapping(party_guard, fence_pos3)
+        or overlapping(party_guard, fence_pos4)
+        or overlapping(party_guard, fence_pos5)
     ):
         guardX = random.randint(0, width - studentSize)
         guardY = random.randint(0, height - studentSize)
         canvas.move(guard, guardX, guardY)
-        partyGuard = canvas.coords(guard)
+        party_guard = canvas.coords(guard)
     guard1 = canvas.create_rectangle(
         0, 0, studentSize * 2, studentSize * 2, fill="darkblue"
     )
     guard1X = random.randint(0, width - studentSize)
     guard1Y = random.randint(0, height - studentSize)
     canvas.move(guard1, guard1X, guard1Y)
-    partyGuard = canvas.coords(guard1)
+    party_guard = canvas.coords(guard1)
     while (
-        overlapping(partyGuard, Spos)
-        or overlapping(partyGuard, partyPos)
-        or overlapping(partyGuard, fencePos1)
-        or overlapping(partyGuard, fencePos2)
-        or overlapping(partyGuard, fencePos3)
-        or overlapping(partyGuard, fencePos4)
-        or overlapping(partyGuard, fencePos5)
+        overlapping(party_guard, s_pos)
+        or overlapping(party_guard, party_pos)
+        or overlapping(party_guard, fence_pos1)
+        or overlapping(party_guard, fence_pos2)
+        or overlapping(party_guard, fence_pos3)
+        or overlapping(party_guard, fence_pos4)
+        or overlapping(party_guard, fence_pos5)
     ):
         guard1X = random.randint(0, width - studentSize)
         guard1Y = random.randint(0, height - studentSize)
         canvas.move(guard1, guard1X, guard1Y)
-        partyGuard = canvas.coords(guard1)
+        party_guard = canvas.coords(guard1)
     guard2 = canvas.create_rectangle(
         0, 0, studentSize * 2, studentSize * 2, fill="darkblue"
     )
     guard2X = random.randint(0, width - studentSize)
     guard2Y = random.randint(0, height - studentSize)
     canvas.move(guard2, guard2X, guard2Y)
-    partyGuard = canvas.coords(guard2)
+    party_guard = canvas.coords(guard2)
     while (
-        overlapping(partyGuard, Spos)
-        or overlapping(partyGuard, partyPos)
-        or overlapping(partyGuard, fencePos1)
-        or overlapping(partyGuard, fencePos2)
-        or overlapping(partyGuard, fencePos3)
-        or overlapping(partyGuard, fencePos4)
-        or overlapping(partyGuard, fencePos5)
+        overlapping(party_guard, s_pos)
+        or overlapping(party_guard, party_pos)
+        or overlapping(party_guard, fence_pos1)
+        or overlapping(party_guard, fence_pos2)
+        or overlapping(party_guard, fence_pos3)
+        or overlapping(party_guard, fence_pos4)
+        or overlapping(party_guard, fence_pos5)
     ):
         guard2X = random.randint(0, width - studentSize)
         guard2Y = random.randint(0, height - studentSize)
         canvas.move(guard2, guard2X, guard2Y)
-        partyGuard = canvas.coords(guard2)
+        party_guard = canvas.coords(guard2)
 
 
-def placeFence():
+def place_fence():
     """Place the fences/grey rectangles"""
     global fence1, fence2, fence3, fenceX, fenceY, fence4, fence5, fence2X, fence2Y, fence3X, fence3Y, fence4X, fence4Y, fence5X, fence5Y
     fence1 = canvas.create_rectangle(0, 0, studentSize, studentSize * 10, fill="grey")
@@ -446,93 +446,93 @@ def placeFence():
     fence2X = random.randint(50, 400)
     fence2Y = random.randint(50, 400)
     canvas.move(fence2, fence2X, fence2Y)
-    fencePos1 = canvas.coords(fence1)
-    fencePos2 = canvas.coords(fence2)
+    fence_pos1 = canvas.coords(fence1)
+    fence_pos2 = canvas.coords(fence2)
     # check in order for the fences to not overlap each other
-    while overlapping(fencePos1, fencePos2):
+    while overlapping(fence_pos1, fence_pos2):
         fence2X = random.randint(0, 400)
         fence2Y = random.randint(0, 400)
         canvas.move(fence2, fence2X, fence2Y)
-        fencePos2 = canvas.coords(fence2)
+        fence_pos2 = canvas.coords(fence2)
     fence3 = canvas.create_rectangle(0, 0, studentSize * 10, studentSize, fill="grey")
     fence3X = random.randint(50, 400)
     fence3Y = random.randint(50, 400)
     canvas.move(fence3, fence3X, fence3Y)
-    fencePos3 = canvas.coords(fence3)
-    while overlapping(fencePos3, fencePos2) or overlapping(fencePos1, fencePos3):
+    fence_pos3 = canvas.coords(fence3)
+    while overlapping(fence_pos3, fence_pos2) or overlapping(fence_pos1, fence_pos3):
         fence3X = random.randint(0, 400)
         fence3Y = random.randint(0, 400)
         canvas.move(fence3, fence3X, fence3Y)
-        fencePos3 = canvas.coords(fence3)
+        fence_pos3 = canvas.coords(fence3)
     fence4 = canvas.create_rectangle(0, 0, studentSize * 20, studentSize, fill="grey")
     fence4X = random.randint(50, 400)
     fence4Y = random.randint(50, 400)
     canvas.move(fence4, fence4X, fence4Y)
-    fencePos4 = canvas.coords(fence4)
+    fence_pos4 = canvas.coords(fence4)
     while (
-        overlapping(fencePos1, fencePos4)
-        or overlapping(fencePos2, fencePos4)
-        or overlapping(fencePos3, fencePos4)
+        overlapping(fence_pos1, fence_pos4)
+        or overlapping(fence_pos2, fence_pos4)
+        or overlapping(fence_pos3, fence_pos4)
     ):
         fence4X = random.randint(0, 400)
         fence4Y = random.randint(0, 400)
         canvas.move(fence4, fence4X, fence4Y)
-        fencePos4 = canvas.coords(fence4)
+        fence_pos4 = canvas.coords(fence4)
     fence5 = canvas.create_rectangle(0, 0, studentSize, studentSize * 15, fill="grey")
     fence5X = random.randint(50, 400)
     fence5Y = random.randint(50, 400)
     canvas.move(fence5, fence5X, fence5Y)
-    fencePos5 = canvas.coords(fence5)
+    fence_pos5 = canvas.coords(fence5)
     while (
-        overlapping(fencePos1, fencePos5)
-        or overlapping(fencePos2, fencePos5)
-        or overlapping(fencePos3, fencePos5)
-        or overlapping(fencePos4, fencePos5)
+        overlapping(fence_pos1, fence_pos5)
+        or overlapping(fence_pos2, fence_pos5)
+        or overlapping(fence_pos3, fence_pos5)
+        or overlapping(fence_pos4, fence_pos5)
     ):
         fence5X = random.randint(0, 400)
         fence5Y = random.randint(0, 400)
         canvas.move(fence5, fence5X, fence5Y)
-        fencePos5 = canvas.coords(fence5)
+        fence_pos5 = canvas.coords(fence5)
 
 
 # functions that give the direction of the player once the keys are pressed
-def leftKey(event):
+def left_key(event):
     global direction
     direction = "left"
 
 
-def rightKey(event):
+def right_key(event):
     global direction
     direction = "right"
 
 
-def upKey(event):
+def up_key(event):
     global direction
     direction = "up"
 
 
-def downKey(event):
+def down_key(event):
     global direction
     direction = "down"
 
 
-def PauseKey(event):
+def pause_key(event):
     onclick()
 
 
 # the cheat code - code that is going to help the user see the guards
-def SeeKey(event):
+def see_key(event):
     canvas.itemconfig(guard, fill="darkblue")
     canvas.itemconfig(guard1, fill="darkblue")
     canvas.itemconfig(guard2, fill="darkblue")
 
 
 # the boss key - code that is going to help the user hide the game
-def HideKey(event):
+def hide_key(event):
     global direction
     direction = None
     window.withdraw()
-    window.after(5000, Show)
+    window.after(5000, show)
     canvas.create_text(
         width / 2,
         height / 2,
@@ -542,11 +542,11 @@ def HideKey(event):
     )
 
 
-def Show():
+def show():
     window.deiconify()
 
 
-def ChangeScore():
+def change_score():
     """Change the score by 10"""
     global score
     score += 10
@@ -554,7 +554,7 @@ def ChangeScore():
     canvas.itemconfigure(scoreText, text=txt)
 
 
-def moveParty():
+def move_party():
     """Move the party to a random position"""
     global party, partyX, partyY
     canvas.move(party, (partyX * (-1)), (partyY * (-1)))
@@ -564,68 +564,68 @@ def moveParty():
 
 
 # once the player gets to the party, the guards move in another random position
-def moveGuard():
+def move_guard():
     global guard, guardX, guardY, guard1, guard2, guard1X, guard1Y, guard2X, guard2Y
     canvas.move(guard, (guardX * (-1)), (guardY * (-1)))
     canvas.itemconfig(guard, fill="darkblue")
     guardX = random.randint(0, width - studentSize)
     guardY = random.randint(0, height - studentSize)
     canvas.move(guard, guardX, guardY)
-    partyPos = canvas.coords(party)
-    fencePos1 = canvas.coords(fence1)
-    fencePos2 = canvas.coords(fence2)
-    fencePos3 = canvas.coords(fence3)
-    fencePos4 = canvas.coords(fence4)
-    fencePos5 = canvas.coords(fence5)
-    GuardPos = canvas.coords(guard)
+    party_pos = canvas.coords(party)
+    fence_pos1 = canvas.coords(fence1)
+    fence_pos2 = canvas.coords(fence2)
+    fence_pos3 = canvas.coords(fence3)
+    fence_pos4 = canvas.coords(fence4)
+    fence_pos5 = canvas.coords(fence5)
+    guard_pos = canvas.coords(guard)
     while (
-        overlapping(GuardPos, partyPos)
-        or overlapping(GuardPos, fencePos1)
-        or overlapping(GuardPos, fencePos2)
-        or overlapping(GuardPos, fencePos3)
-        or overlapping(GuardPos, fencePos4)
-        or overlapping(GuardPos, fencePos5)
+        overlapping(guard_pos, party_pos)
+        or overlapping(guard_pos, fence_pos1)
+        or overlapping(guard_pos, fence_pos2)
+        or overlapping(guard_pos, fence_pos3)
+        or overlapping(guard_pos, fence_pos4)
+        or overlapping(guard_pos, fence_pos5)
     ):
         guardX = random.randint(0, width - studentSize)
         guardY = random.randint(0, height - studentSize)
         canvas.move(guard, guardX, guardY)
-        GuardPos = canvas.coords(guard)
+        guard_pos = canvas.coords(guard)
     canvas.move(guard1, (guard1X * (-1)), (guard1Y * (-1)))
     canvas.itemconfig(guard1, fill="darkblue")
     guard1X = random.randint(0, width - studentSize)
     guard1Y = random.randint(0, height - studentSize)
     canvas.move(guard1, guard1X, guard1Y)
-    GuardPos = canvas.coords(guard1)
+    guard_pos = canvas.coords(guard1)
     while (
-        overlapping(GuardPos, partyPos)
-        or overlapping(GuardPos, fencePos1)
-        or overlapping(GuardPos, fencePos2)
-        or overlapping(GuardPos, fencePos3)
-        or overlapping(GuardPos, fencePos4)
-        or overlapping(GuardPos, fencePos5)
+        overlapping(guard_pos, party_pos)
+        or overlapping(guard_pos, fence_pos1)
+        or overlapping(guard_pos, fence_pos2)
+        or overlapping(guard_pos, fence_pos3)
+        or overlapping(guard_pos, fence_pos4)
+        or overlapping(guard_pos, fence_pos5)
     ):
         guard1X = random.randint(0, width - studentSize)
         guard1Y = random.randint(0, height - studentSize)
         canvas.move(guard1, guard1X, guard1Y)
-        GuardPos = canvas.coords(guard1)
+        guard_pos = canvas.coords(guard1)
     canvas.move(guard2, (guard2X * (-1)), (guard2Y * (-1)))
     canvas.itemconfig(guard2, fill="darkblue")
     guard2X = random.randint(0, width - studentSize)
     guard2Y = random.randint(0, height - studentSize)
     canvas.move(guard2, guard2X, guard2Y)
-    GuardPos = canvas.coords(guard1)
+    guard_pos = canvas.coords(guard1)
     while (
-        overlapping(GuardPos, partyPos)
-        or overlapping(GuardPos, fencePos1)
-        or overlapping(GuardPos, fencePos2)
-        or overlapping(GuardPos, fencePos3)
-        or overlapping(GuardPos, fencePos4)
-        or overlapping(GuardPos, fencePos5)
+        overlapping(guard_pos, party_pos)
+        or overlapping(guard_pos, fence_pos1)
+        or overlapping(guard_pos, fence_pos2)
+        or overlapping(guard_pos, fence_pos3)
+        or overlapping(guard_pos, fence_pos4)
+        or overlapping(guard_pos, fence_pos5)
     ):
         guard2X = random.randint(0, width - studentSize)
         guard2Y = random.randint(0, height - studentSize)
         canvas.move(guard2, guard2X, guard2Y)
-        GuardPos = canvas.coords(guard2)
+        guard_pos = canvas.coords(guard2)
 
     # after 2.5 sec, the colour of the guards turns black
     window.after(2500, change_color)
@@ -637,7 +637,7 @@ def overlapping(a, b):
     return False
 
 
-def moveStudent():
+def move_student():
     canvas.pack()
     # changing the position of the player once he gets out of the canvas
     positions = []
@@ -666,21 +666,21 @@ def moveStudent():
     elif direction == "down":
         canvas.move(student[0], 0, studentSize)
 
-    sHeadPos = canvas.coords(student[0])
-    partyPos = canvas.coords(party)
-    SafePos = canvas.coords(safe)
+    s_head_pos = canvas.coords(student[0])
+    party_pos = canvas.coords(party)
+    safe_pos = canvas.coords(safe)
     # if the student gets to the party
-    if overlapping(sHeadPos, partyPos):
-        moveParty()
-        moveGuard()
-        ChangeScore()
+    if overlapping(s_head_pos, party_pos):
+        move_party()
+        move_guard()
+        change_score()
     # if the student gets to the safePlace
-    if overlapping(sHeadPos, SafePos):
-        moveParty()
-    GuardPos = canvas.coords(guard)
+    if overlapping(s_head_pos, safe_pos):
+        move_party()
+    guard_pos = canvas.coords(guard)
     # if the student meets the guard - game over
-    if overlapping(sHeadPos, GuardPos):
-        gameOver = True
+    if overlapping(s_head_pos, guard_pos):
+        game_over = True
         canvas.create_text(
             width / 2,
             height / 2,
@@ -689,9 +689,9 @@ def moveStudent():
             text="Game over! Close the program.",
             tag="text",
         )
-    GuardPos = canvas.coords(guard1)
-    if overlapping(sHeadPos, GuardPos):
-        gameOver = True
+    guard_pos = canvas.coords(guard1)
+    if overlapping(s_head_pos, guard_pos):
+        game_over = True
         canvas.create_text(
             width / 2,
             height / 2,
@@ -700,9 +700,9 @@ def moveStudent():
             text="Game over! Close the program.",
             tag="text",
         )
-    GuardPos = canvas.coords(guard2)
-    if overlapping(sHeadPos, GuardPos):
-        gameOver = True
+    guard_pos = canvas.coords(guard2)
+    if overlapping(s_head_pos, guard_pos):
+        game_over = True
         canvas.create_text(
             width / 2,
             height / 2,
@@ -712,9 +712,9 @@ def moveStudent():
             tag="text",
         )
     # if the student meets the fence - game over
-    fencePos = canvas.coords(fence1)
-    if overlapping(sHeadPos, fencePos):
-        gameOver = True
+    fence_pos = canvas.coords(fence1)
+    if overlapping(s_head_pos, fence_pos):
+        game_over = True
         canvas.create_text(
             width / 2,
             height / 2,
@@ -723,9 +723,9 @@ def moveStudent():
             text="Game over! Close the program.",
             tag="text",
         )
-    fencePos = canvas.coords(fence2)
-    if overlapping(sHeadPos, fencePos):
-        gameOver = True
+    fence_pos = canvas.coords(fence2)
+    if overlapping(s_head_pos, fence_pos):
+        game_over = True
         canvas.create_text(
             width / 2,
             height / 2,
@@ -734,9 +734,9 @@ def moveStudent():
             text="Game over! Close the program.",
             tag="text",
         )
-    fencePos = canvas.coords(fence3)
-    if overlapping(sHeadPos, fencePos):
-        gameOver = True
+    fence_pos = canvas.coords(fence3)
+    if overlapping(s_head_pos, fence_pos):
+        game_over = True
         canvas.create_text(
             width / 2,
             height / 2,
@@ -745,9 +745,9 @@ def moveStudent():
             text="Game over! Close the program.",
             tag="text",
         )
-    fencePos = canvas.coords(fence4)
-    if overlapping(sHeadPos, fencePos):
-        gameOver = True
+    fence_pos = canvas.coords(fence4)
+    if overlapping(s_head_pos, fence_pos):
+        game_over = True
         canvas.create_text(
             width / 2,
             height / 2,
@@ -756,9 +756,9 @@ def moveStudent():
             text="Game over! Close the program.",
             tag="text",
         )
-    fencePos = canvas.coords(fence5)
-    if overlapping(sHeadPos, fencePos):
-        gameOver = True
+    fence_pos = canvas.coords(fence5)
+    if overlapping(s_head_pos, fence_pos):
+        game_over = True
         canvas.create_text(
             width / 2,
             height / 2,
@@ -771,13 +771,13 @@ def moveStudent():
 
     if "gameOver" not in locals():
         if score > 150:
-            window.after(20, moveStudent)
+            window.after(20, move_student)
         elif score > 100:
-            window.after(40, moveStudent)
+            window.after(40, move_student)
         elif score > 50:
-            window.after(60, moveStudent)
+            window.after(60, move_student)
         else:
-            window.after(120, moveStudent)
+            window.after(120, move_student)
     # else the leader board appears
     else:
         board()
@@ -793,7 +793,7 @@ def change_color():
 # size of window/canvas
 width = 500
 height = 500
-window = setWindowDimensions(width, height)
+window = set_window_dimensions(width, height)
 canvas = Canvas(window, bg="black", width=width, height=height)
 # declare the variable student
 student = []
@@ -812,22 +812,22 @@ scoreText = canvas.create_text(
 )
 
 # calling the functions that are used to update the player s location
-canvas.bind("a", leftKey)
-canvas.bind("d", rightKey)
-canvas.bind("w", upKey)
-canvas.bind("s", downKey)
-canvas.bind("e", SeeKey)
-canvas.bind("q", HideKey)
-canvas.bind("<space>", PauseKey)
+canvas.bind("a", left_key)
+canvas.bind("d", right_key)
+canvas.bind("w", up_key)
+canvas.bind("s", down_key)
+canvas.bind("e", see_key)
+canvas.bind("q", hide_key)
+canvas.bind("<space>", pause_key)
 canvas.focus_set()
 direction = None
 
 # calling the functions
-placeFence()
-placeParty()
-placeGuards()
-placeSafeParty()
-moveStudent()
+place_fence()
+place_party()
+place_guards()
+place_safe_party()
+move_student()
 
 window.after(2500, change_color)
 
